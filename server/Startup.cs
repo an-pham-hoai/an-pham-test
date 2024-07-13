@@ -54,7 +54,7 @@ namespace Server
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "Opus API",
+                    Title = "Elsa API",
                 });
             });
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
@@ -98,6 +98,7 @@ namespace Server
                 Config.Instance.ConnectionString = connectionStrings["ProductContext"];
             }
 
+            Helper.SeedData();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

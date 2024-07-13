@@ -1381,7 +1381,7 @@ namespace Server.DataAccess
                     return tableFieldNames;
                 }
 
-                string tb = GetTableName().Replace("fdb.", "");
+                string tb = GetTableName().Replace("dbo.", "").Replace("[", "").Replace("]", "");
                 List<string> names = new List<string>();
                 string sql = $@"
                 SELECT COLUMN_NAME

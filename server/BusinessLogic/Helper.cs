@@ -339,6 +339,100 @@ namespace Server.BusinessLogic
             }
         }
 
+        private static string[] Gen4(string[] words)
+        {
+            int i = new Random().Next(words.Length);
+            return new string[] {
+                words[i],
+                words[(i + 1) % words.Length],
+                words[i + 2],
+                words[i + 3],
+            };
+        }
+
+        public static void SeedData()
+        {
+            SeedUsers();
+            SeedQuestions();
+            SeedQuizes();
+        }
+
+        public static void SeedUsers()
+        {
+            var qs = UserDAC.Instance.CountByFields(new string[] { }, new object[] { });
+            if (qs > 0) return;
+
+            for (int i = 0; i < 10; i++)
+            {
+                User user = new User()
+                {
+                    Email = $"user{i}@abc.com",
+                    PasswordHash = "0cc175b9c0f1b6a831c399e269772661",
+                    Name = $"User {i}",
+                };
+                UserDAC.Instance.Insert(user);
+            }
+        }
+
+        public static void SeedQuizes()
+        {
+            var qs = QuizDAC.Instance.CountByFields(new string[] { }, new object[] { });
+            if (qs > 0) return;
+
+            List<Question> questions = QuestionDAC.Instance.GetAll();
+
+            for (int i = 0; i < 5; i++)
+            {
+                List<string> questionCodes = new List<string>();
+
+                for (int j = 0; j < 7; j++)
+                {
+                    int qi = new Random().Next(questions.Count);
+                    if (!questionCodes.Contains(questions[qi].Code))
+                    {
+                        questionCodes.Add(questions[qi].Code);
+                    }
+                }
+
+                Quiz quiz = new Quiz()
+                {
+                    Code = $"QUIZ_{i}",
+                    Questions = questionCodes,
+                };
+                QuizDAC.Instance.Insert(quiz);
+            }
+        }
+
+        public static void SeedQuestions()
+        {
+            var qs = QuestionDAC.Instance.CountByFields(new string[] { }, new object[] { });
+            if (qs > 0) return;
+
+            string[] wordENs = new string[] { "apple", "banana", "candy", "door", "emergency", "fun", "goat", "house", "ice" };
+            string[] wordVNs = new string[] { "Táo", "Chuối", "Kẹo", "Cửa", "Khẩn cấp", "Vui vẻ", "Con dê", "Nhà", "Nước đá" };
+            var answers = Gen4(wordVNs);
+
+            for (int i = 0; i < wordENs.Length; i++)
+            {
+                Question question = new Question()
+                {
+                    Code = $"QUE_{i}",
+                    Description = $"What does '{wordENs[i]}' mean?",
+                    Answer = $"{wordVNs[i]}",
+                    AnswerA = answers[0],
+                    AnswerB = answers[1],
+                    AnswerC = answers[2],
+                    AnswerD = answers[3],
+                };
+                int m = i % 4;
+                if (m == 0) question.AnswerA = question.Answer;
+                if (m == 1) question.AnswerB = question.Answer;
+                if (m == 2) question.AnswerC = question.Answer;
+                if (m == 3) question.AnswerD = question.Answer;
+                QuestionDAC.Instance.Insert(question);
+            }
+        }
+
     }
 }
 

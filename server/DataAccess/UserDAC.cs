@@ -11,5 +11,10 @@ namespace Server.DataAccess
         private UserDAC() { }
 
         #endregion
+
+        protected override string GetTableName()
+        {
+            return "[User]";
+        }
     }
 }
