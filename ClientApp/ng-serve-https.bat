@@ -1,0 +1,1 @@
+ng serve -o --poll 2000 --host 0.0.0.0 --disable-host-check --ssl --ssl-key localhost.key  --ssl-cert localhost.crt

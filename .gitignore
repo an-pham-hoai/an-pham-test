@@ -2,3 +2,7 @@
 server/bin/
 server/obj/
 server/.vs/
+.vs/
+bin/
+obj/
+Client.csproj.user
