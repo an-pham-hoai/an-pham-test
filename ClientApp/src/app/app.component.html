@@ -389,24 +389,26 @@
 
           <div>
             <label class="d-block">
-              <input type="radio" name="options" [(ngModel)]="selectedOption" [value]="quizSession.question.AnswerA"> 
+              <input type="radio" name="options" [(ngModel)]="quizSession.question.UserChoice" [value]="quizSession.question.AnswerA"> 
               {{quizSession.question.AnswerA}}
             </label>
 
             <label class="d-block">
-              <input type="radio" name="options" [(ngModel)]="selectedOption" [value]="quizSession.question.AnswerB"> 
+              <input type="radio" name="options" [(ngModel)]="quizSession.question.UserChoice" [value]="quizSession.question.AnswerB"> 
               {{quizSession.question.AnswerB}}
             </label>
 
             <label class="d-block">
-              <input type="radio" name="options" [(ngModel)]="selectedOption" [value]="quizSession.question.AnswerC"> 
+              <input type="radio" name="options" [(ngModel)]="quizSession.question.UserChoice" [value]="quizSession.question.AnswerC"> 
               {{quizSession.question.AnswerC}}
             </label>
 
             <label class="d-block">
-              <input type="radio" name="options" [(ngModel)]="selectedOption" [value]="quizSession.question.AnswerD"> 
+              <input type="radio" name="options" [(ngModel)]="quizSession.question.UserChoice" [value]="quizSession.question.AnswerD"> 
               {{quizSession.question.AnswerD}}
             </label>
+
+            {{quizSession.question | json}}
 
           </div>
 

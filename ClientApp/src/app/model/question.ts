@@ -12,6 +12,8 @@ export class Question extends BaseEntity<Question> {
     AnswerC?: string;
     AnswerD?: string;
 
+    UserChoice: string = '';
+
     public override className?(): string {
         return 'Question';
     }
