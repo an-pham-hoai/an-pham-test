@@ -7,6 +7,8 @@ import { CryptoBC } from './bc/crypto-bc';
 import { MasterBC } from './bc/master-bc';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
+import { User } from './model/user';
+import { UserBC } from './bc/user-bc';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +17,7 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class AppComponent implements OnInit {
   title = 'quiz';
+  users: User[] = [];
 
   constructor(
     private httpClient: HttpClient,
@@ -40,6 +43,8 @@ export class AppComponent implements OnInit {
 
   async ngOnInit() {
     await MasterBC.getInstance().load();
+    this.users = await UserBC.getInstance().all();
+    console.log('all users', this.users);
   }
 
 }
