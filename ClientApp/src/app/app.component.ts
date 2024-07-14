@@ -77,16 +77,27 @@ export class AppComponent implements OnInit {
 
     let quizSessions = await QuizSessionBC.getInstance().all();
     console.log('all quiz sections', quizSessions);
-    
+
     if (onlineUsers && onlineUsers.length) {
       quizSessions = quizSessions.filter(t => onlineUsers.find(u => u.QuizSessionId == t.SessionId) != null);
 
       for (let quizSession of quizSessions) {
         quizSession.users = onlineUsers.filter(u => u.QuizSessionId == quizSession.SessionId);
+        quizSession.quiz = this.quizes.find(t => t.Code == quizSession.QuizCode);
+
+        if (quizSession.quiz) {
+          quizSession.questions = this.questions.filter(t => quizSession.quiz.Questions.includes(t.Code));
+          if (quizSession.questions && quizSession.questions.length) {
+            quizSession.question = quizSession.questions[0];
+          }
+        }
       }
 
       console.log('running sessions', quizSessions);
       this.quizSessions = quizSessions;
+      if (this.quizSession) {
+        this.quizSession = this.quizSessions.find(t => t.Id == this.quizSession.Id);
+      }
     }
   }
 

@@ -353,42 +353,68 @@
   
   <!-- End Users -->
 
-  <div *ngIf="user">
+  <div *ngIf="user" class="row">
 
-    <div *ngIf="quizSession">
-      <h2>Please complete this Quiz</h2>
-
-      <div class="border">
-
+    <div class="col">
+      <div>
+        <h2>Running Sessions</h2>
+  
+        <div *ngFor="let q of quizSessions" class="card-container">
+          <button class="card" (click)="joinSession(q)">
+            Join Session Quiz {{q.QuizCode}}
+          </button>
+        </div>
       </div>
+  
+      <div>
+        <h2>Quiz List</h2>
+  
+        <div *ngFor="let q of quizes" class="card-container">
+          <button class="card" (click)="startSession(q)">
+            Start <b>Quiz {{q.Code}}</b>
+          </button>
+        </div>
+      </div>
+
     </div>
 
-    <div>
-      <h2>Available Sessions</h2>
+    <div class="col">
+      <div *ngIf="quizSession" class="border-left">
+        <h2>Please complete Quiz {{quizSession.QuizCode}}</h2>
+  
+        <div *ngIf="quizSession.question">
+          <div>
+            {{quizSession.question.Description}}
+          </div>
 
-      <div *ngFor="let q of quizSessions" class="card-container">
-        <button class="card" (click)="joinSession(q)">
-          Join Quiz Session {{q.QuizCode}}
-        </button>
-      </div>
-    </div>
+          <div>
+            <label class="d-block">
+              <input type="radio" name="options" [(ngModel)]="selectedOption" [value]="quizSession.question.AnswerA"> 
+              {{quizSession.question.AnswerA}}
+            </label>
 
-    <div>
-      <h2>Quiz List</h2>
+            <label class="d-block">
+              <input type="radio" name="options" [(ngModel)]="selectedOption" [value]="quizSession.question.AnswerB"> 
+              {{quizSession.question.AnswerB}}
+            </label>
 
-      <div *ngFor="let q of quizes" class="card-container">
-        <button class="card" (click)="startSession(q)">
-          Start Quiz Session
-        </button>
+            <label class="d-block">
+              <input type="radio" name="options" [(ngModel)]="selectedOption" [value]="quizSession.question.AnswerC"> 
+              {{quizSession.question.AnswerC}}
+            </label>
 
-        <div class="card">
-          {{q.Code}}
+            <label class="d-block">
+              <input type="radio" name="options" [(ngModel)]="selectedOption" [value]="quizSession.question.AnswerD"> 
+              {{quizSession.question.AnswerD}}
+            </label>
+
+          </div>
+
         </div>
       </div>
     </div>
+    
   </div>
-
- 
 
   <input type="hidden" #selection>
 

@@ -2,10 +2,12 @@ import { BaseBC } from "../bc/base-bc";
 import { QuizSessionBC } from "../bc/quiz-session-bc";
 import { BaseEntity } from "./base-entity";
 import { Question } from "./question";
+import { Quiz } from "./quiz";
 import { User } from "./user";
 
 export class QuizSession extends BaseEntity<QuizSession> {
 
+    quiz: Quiz;
     users: User[] = [];
     questions: Question[] = [];
     question: Question;
