@@ -42,7 +42,7 @@ export class InquiryGuid {
     }
 }
 
-export class QuoteGuid {
+export class QuizSessionGuid {
     static newGuid(): string {
         let id: string = 'xxxxxxxx'.replace(/[xy]/g, function (c) {
             var r = (Math.random() * 16) | 0,
@@ -50,7 +50,7 @@ export class QuoteGuid {
             return v.toString(16);
         });
 
-        return 'QT' + id.toUpperCase();
+        return 'QS_' + id.toUpperCase();
     }
 }
 

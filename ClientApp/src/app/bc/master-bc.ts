@@ -5,6 +5,7 @@ import { SchemaDB } from '../model/schema';
 import { CryptoBC } from './crypto-bc';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { BaseEntity } from '../model/base-entity';
+import { User } from '../model/user';
 
 
 export class MasterBC {
@@ -75,6 +76,12 @@ export class MasterBC {
         let sd = CryptoBC.getInstance().decrypt(to.Value);
         this.schema = <SchemaDB>JSON.parse(sd);
         console.log('schema', this.schema);
+    }
+
+    public async userState(user: User): Promise<User[]> {
+        let url: string = `${environment.apiUrl}master/UserState`;
+        let users = await HttpService.http.post<User[]>(url, user, Standard.BackgroundHeaders).toPromise();
+        return users;
     }
 
     public getTableFields(tableName: string): string[] {

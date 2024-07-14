@@ -14,6 +14,7 @@ using System.Threading;
 using System.Web;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using System.Linq;
 
 namespace Server.Controllers
 {
@@ -22,6 +23,8 @@ namespace Server.Controllers
     [ApiController]
     public class MasterController : Controller
     {
+        public static List<User> users = new List<User>();
+
         [Route("[action]")]
         [HttpGet]
         public string IP()
@@ -42,6 +45,25 @@ namespace Server.Controllers
             var s = JsonConvert.SerializeObject(schema);
             var sd = CryptoBC.Instance.EncryptStringAES(s);
             return new TObject<string>() { Value = sd };
+        }
+
+        [Route("[action]")]
+        [HttpPost]
+        public List<User> UserState(User user)
+        {
+            long now = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+            User stateUser = users.Find(t => t.Id == user.Id);
+            if (stateUser != null)
+            {
+                stateUser.Timestamp = now;
+                stateUser.QuizSessionId = user.QuizSessionId;
+            }
+            else
+            {
+                users.Add(user);
+            }
+
+            return users.Where(t => t.Timestamp > now - 10000).ToList();
         }
 
     }

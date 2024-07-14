@@ -20,4 +20,6 @@ export class User extends BaseEntity<User> {
     PasswordHash?: string; 
     Name?: string;
 
+    QuizSessionId?: string;
+
 }
